@@ -10,20 +10,29 @@ Technical test - Voodoo Playable ads developer
 
 ## To do
 
-Make [Flip Dunk](https://apps.apple.com/fr/app/flip-dunk/id1459811607) playable ads.
+Make [Flip Dunk](https://apps.apple.com/fr/app/flip-dunk/id1459811607) playable ads core loop.
 
-#### Optional
+
+#### Optional :
 
 - [ ] Less than 2,5MO
 - [ ] Compress in a single HTML page without extern assets
 
-## My method 
 
-Make the scene with Blender, it's faster and prettier
+## Method
 
-Export all 3D models in .glb files, it's smaller and made for the web
+Make the playground in Blender, it's faster and prettier.
 
-Split the code in small methods for more visibility, maintainability and to be reuse
+Export all 3D models in .glb files, it's smaller and made for the web.
+
+Split the code in small methods for more visibility, maintainability and to be reuse.
+
+## Setup
+
+- MacBook Pro 2016
+- Sublime Text
+- Blender
+- Firefox
 
 
 ## Usage

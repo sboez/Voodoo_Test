@@ -1,6 +1,7 @@
 import Scene from './scene';
 import Lights from './lights';
 import Load from './load.js';
+import * as THREE from 'three';
 
 class App {
 	constructor() {
@@ -24,8 +25,17 @@ class App {
 
 	init() {
 		this.lights = new Lights(this.scene);
+
 		document.body.appendChild(this.scene.renderer.domElement);
 		window.addEventListener('resize', this.onWindowResize.bind(this), false);
+
+		window.addEventListener('mousedown', this.setAnimationJump.bind(this));
+	}
+
+	setAnimationJump() {
+		this.load.jumpAction.play();
+		this.load.jumpAction.setLoop(THREE.LoopOnce);
+		this.load.jumpAction.clampWhenFinished = true;
 	}
 
 	onWindowResize() {

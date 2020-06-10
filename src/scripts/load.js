@@ -30,9 +30,10 @@ export default class Load {
 			const loader = new FBXLoader();
 			loader.load(path, object => {
 				this.mixer = new THREE.AnimationMixer(object);
+				this.jumpAction = this.mixer.clipAction(object.animations[0]);
 
-				this.action = this.mixer.clipAction(object.animations[0]);
-				this.action.play();
+				object.rotation.y = Math.PI;
+				object.position.z = 8;
 
 				object.traverse((child) => {
 					if (child.isMesh) {
@@ -41,7 +42,7 @@ export default class Load {
 					}
 				});
 
-				this.scene.add(object);
+				this.scene.add(object)
 				resolve(object);
 			});
 		});
