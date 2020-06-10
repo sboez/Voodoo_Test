@@ -20,7 +20,9 @@ Make [Flip Dunk](https://apps.apple.com/fr/app/flip-dunk/id1459811607) playable 
 ## My method 
 
 Make the scene with Blender, it's faster and prettier
+
 Export all 3D models in .glb files, it's smaller and made for the web
+
 Split the code in small methods for more visibility, maintainability and to be reuse
 
 
