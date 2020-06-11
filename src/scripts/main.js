@@ -10,8 +10,8 @@ class App {
 		this.load = null;
 
 		this.JUMP = false;
-
 		this.delta = 0;
+		this.time = 0;
 
 		this.letsPlay();
 	}
@@ -32,17 +32,20 @@ class App {
 		this.lights = new Lights(this.scene);
 
 		document.body.appendChild(this.scene.renderer.domElement);
-		window.addEventListener('resize', this.onWindowResize.bind(this), false);
 
+		window.addEventListener('resize', this.onWindowResize.bind(this), false);
 		window.addEventListener('click', this.setAnimationJump.bind(this), {once: true});
 		window.addEventListener('mousedown', this.tuck);
 
 		/* Get position between player and hoop */
-		this.distance = Math.sqrt(Math.pow((this.load.player.position.z - this.getByName("HoopCloth").position.z - 0.5), 2));
+		this.distance = Math.sqrt(Math.pow((this.load.player.position.z - this.load.getObjectByName("HoopCloth").position.z), 2));
+
 	}
 
-	getByName(name) {
-		return this.load.playground.children.find((object) => object.name === name);
+	setGhostBall() {
+		this.ball = this.load.getObjectByName("Ghost");
+		this.ball.rotation.x = this.time * 4;
+		this.ball.position.y = 0.5 + Math.abs(Math.sin(this.time * 3)) * 2;
 	}
 
 	tuck() {
@@ -52,15 +55,13 @@ class App {
 	setAnimationJump() {
 		this.JUMP = true;
 		this.load.jumpAction.play();
-		this.load.jumpAction.setLoop(THREE.LoopOnce);
-		this.load.jumpAction.clampWhenFinished = true;
 	}
 
 	setJump() {
 		/* Simulate a jump when knees are bent, pause animation when raised arms */
-		if(this.JUMP && this.load.mixer.time > 2.2) {
-			if (this.load.mixer.time > 2.4) this.load.jumpAction.paused = true;
-			this.load.player.velocity.y += 0.002;
+		if(this.JUMP && this.load.jumpAction.time > 1.05) {
+			if (this.load.jumpAction.time > 1.5) this.load.jumpAction.paused = true;
+			this.load.player.velocity.y += 0.004;
 			this.load.player.position.z -= this.distance / 100;
 		}
 		if (this.load.player.position.y > 3) {
@@ -68,7 +69,7 @@ class App {
 			this.load.player.velocity.y -= 0.005;
 			this.load.player.position.z -= this.distance / 100;
 		}
-		if (!this.JUMP && this.load.player.position.y <= 0.1) this.load.player.position.y = 0;
+		if (!this.JUMP && this.load.player.position.z <= 0.5) this.load.player.position.y = 1.2;
 	}
 
 	onWindowResize() {
@@ -82,11 +83,14 @@ class App {
 		this.scene.controls.update();
 
 		this.delta = this.scene.clock.getDelta();
+		this.time += this.delta;
 
 		if (this.load.mixer) this.load.mixer.update(this.delta);
 
 		this.load.player.position.add(this.load.player.velocity);
 		this.setJump();
+
+		this.setGhostBall();
 
 		this.scene.renderer.render(this.scene, this.scene.camera);
 	}

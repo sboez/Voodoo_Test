@@ -10,18 +10,11 @@ export default class Scene extends THREE.Scene {
 
 	setScene() {
 		this.clock = new THREE.Clock();
-
 		this.background = new THREE.Color(0x5189FF);
 
 		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
 		this.camera.position.set(-3, 4, -4);
 		this.add(this.camera);
-
-		this.ball = new THREE.Mesh(new THREE.SphereGeometry(0.2, 8, 8), new THREE.MeshBasicMaterial({
-			color: 0xff00ff,
-			wireframe: true
-		}));
-		this.add(this.ball);
 
 		this.setRenderer();
 		this.setControls();

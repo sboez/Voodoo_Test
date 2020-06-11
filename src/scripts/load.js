@@ -18,7 +18,7 @@ export default class Load {
 						object.receiveShadow = false;
 					}
 				});
-				console.log(this.playground);
+				console.log("Playground : ", this.playground);
 				this.scene.add(this.playground);
 				resolve(this.playground);
 			});
@@ -45,10 +45,14 @@ export default class Load {
 				});
 
 				object.add(this.scene.camera);
-				console.log("Character model : ", object);
+				console.log("Character model : ", this.player);
 				this.scene.add(object)
 				resolve(object);
 			});
 		});
+	}
+
+	getObjectByName(name) {
+		return this.playground.children.find((object) => object.name === name);
 	}
 }

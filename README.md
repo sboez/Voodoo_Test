@@ -29,6 +29,8 @@ Export all 3D models in .glb files, it's smaller and made for the web.
 
 Split the code in small methods for more visibility, maintainability and to be reuse.
 
+Can't fail in this playable, give more CPI sometimes, and faster to code (:
+
 #### Feeling :
 
 I love Three.JS, it's not new but re-make a playable gave me great pleasure and motivation, it gave me more reason to do my best for join the Voodoo team.
