@@ -19,7 +19,9 @@ Make [Flip Dunk](https://apps.apple.com/fr/app/flip-dunk/id1459811607) playable 
 - [ ] Compress in a single HTML page without extern assets
 
 
-## Method
+## My Method & Feeling
+
+#### Method :
 
 Make the playground in Blender, it's faster and prettier.
 
@@ -27,12 +29,9 @@ Export all 3D models in .glb files, it's smaller and made for the web.
 
 Split the code in small methods for more visibility, maintainability and to be reuse.
 
-## Setup
+#### Feeling :
 
-- MacBook Pro 2016
-- Sublime Text
-- Blender
-- Firefox
+I love Three.JS, it's not new but re-make a playable gave me great pleasure and motivation, it gave me more reason to do my best for join the Voodoo team.
 
 
 ## Usage

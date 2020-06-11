@@ -11,16 +11,16 @@ export default class Load {
 		return new Promise((resolve) => {
 			const loader = new GLTFLoader();
 			loader.load(path, gltf => {
-				this.model = gltf.scene;
-				this.model.traverse((object) => {
+				this.playground = gltf.scene;
+				this.playground.traverse((object) => {
 					if (object.isMesh) {
 						object.castShadow = true;
 						object.receiveShadow = false;
 					}
 				});
-
-				this.scene.add(this.model);
-				resolve(this.model);
+				console.log(this.playground);
+				this.scene.add(this.playground);
+				resolve(this.playground);
 			});
 		});
 	}
@@ -29,6 +29,8 @@ export default class Load {
 		return new Promise((resolve) => {
 			const loader = new FBXLoader();
 			loader.load(path, object => {
+				this.player = object;
+				
 				this.mixer = new THREE.AnimationMixer(object);
 				this.jumpAction = this.mixer.clipAction(object.animations[0]);
 
@@ -42,6 +44,8 @@ export default class Load {
 					}
 				});
 
+				object.add(this.scene.camera);
+				console.log("Character model : ", object);
 				this.scene.add(object)
 				resolve(object);
 			});
