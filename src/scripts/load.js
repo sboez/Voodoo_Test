@@ -46,7 +46,7 @@ export default class Load {
 
 				object.add(this.scene.camera);
 				console.log("Character model : ", this.player);
-				this.scene.add(object)
+				this.scene.add(object);
 				resolve(object);
 			});
 		});

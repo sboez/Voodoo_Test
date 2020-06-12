@@ -7,9 +7,16 @@ export default class Character {
 		this.load.player.velocity = new THREE.Vector3();
 	}
 
-	setAnimationJump() {
-		this.JUMP = true;
-		this.load.jumpAction.play();
+	/* Active jump animation to the first click, flip animation for other */
+	setAnimation() {
+		this.nbClick += 1;
+
+		if (this.nbClick === 1) {
+			this.JUMP = true;
+			this.load.jumpAction.play();
+			this.load.jumpAction.loop = THREE.LoopOnce;
+		}
+		else if (this.nbClick > 1 && this.JUMP) this.setFlip();
 	}
 
 	/* Set the ball in the player's right hand */
@@ -18,7 +25,6 @@ export default class Character {
 		this.ball.position.set(0, 0, 0);
 
 		this.rHand = this.load.player.children[1].skeleton.bones[28];
-		let grabOffset = new THREE.Vector3(0, 0, 0);
 		this.rHand.add(this.ball);
 	}
 }
