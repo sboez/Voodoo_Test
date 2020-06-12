@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 
 export default class Lights {
-	constructor(scene) {
+	constructor(scene, load) {
 		this.scene = scene;
+		this.load = load;
 
 		this.setAmbient();
 		this.setPoint();
