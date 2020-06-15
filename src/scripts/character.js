@@ -20,6 +20,7 @@ export default class Character {
 			this.load.jumpAction.time = 8.45;
 		}
 		else if (this.nbClick > 1 && this.JUMP) this.setFlip();
+		else if (this.nbClick > 1 && !this.JUMP) window.open("https://apps.apple.com/fr/app/flip-dunk/id1459811607");
 	}
 
 	/* Set the ball in the player's right hand */

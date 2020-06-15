@@ -13,7 +13,7 @@ export default class Scene extends THREE.Scene {
 		this.background = new THREE.Color(0x263E70);
 
 		this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-		this.camera.position.set(-3, 4, -6);
+		this.camera.position.set(-2, 3, -5);
 		this.add(this.camera);
 
 		this.setRenderer();
@@ -29,6 +29,7 @@ export default class Scene extends THREE.Scene {
 
 	setControls() {		
 		this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+		this.controls.enabled = false;
 		this.controls.update();
 	}
 }
