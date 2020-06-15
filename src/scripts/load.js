@@ -18,7 +18,7 @@ export default class Load {
 						object.receiveShadow = false;
 					}
 				});
-				console.log("Playground : ", this.playground);
+
 				this.scene.add(this.playground);
 				resolve(this.playground);
 			});
@@ -46,7 +46,6 @@ export default class Load {
 					}
 				});
 
-				console.log("Player : ", this.player);
 				this.player.add(this.scene.camera);
 				this.scene.add(this.player);
 				resolve(this.player);

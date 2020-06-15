@@ -25,7 +25,6 @@ export default class Scene extends THREE.Scene {
 		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
-		window.renderInfo = this.renderer.info;
 	}
 
 	setControls() {		

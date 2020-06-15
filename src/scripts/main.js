@@ -43,8 +43,7 @@ class App {
 		window.addEventListener('click', this.character.setJumpAnimation.bind(this));
 
 		/* Get position between player and hoop */
-		this.distance = Math.sqrt(Math.pow((this.load.player.position.z - this.getObjectByName("HoopCloth").position.z), 2));
-
+		this.distance = Math.sqrt(Math.pow((this.load.player.position.z - this.getObjectByName("HoopCloth").position.z), 2.1));
 	}
 
 	onWindowResize() {
@@ -58,18 +57,22 @@ class App {
 	}
 
 	setJump() {
-		this.setIdleAnimation();
 		/* To synchronize click event with player forward rotation */
-		if (!this.JUMP) this.dt = 0;
+		if (!this.JUMP) {
+			this.character.setIdleAnimation();
+			this.dt = 0;
+		}
 		else this.dt += this.delta;
 
 		/* Simulate a jump when knees are bent, pause animation when raised arms and forward rotation */
-		if(this.JUMP && this.load.jumpAction.time > 9.4) {
-			if (this.load.jumpAction.time > 9.7) this.load.jumpAction.paused = true;
+		if (this.JUMP && this.load.jumpAction.time > 9.4) {
 			this.load.player.velocity.y += 0.002;
 			this.load.player.rotation.x = this.dt * -0.2;
 			this.load.player.position.z -= this.distance / 100;
 		}
+
+		if (this.load.jumpAction.time > 9.7) this.load.jumpAction.paused = true;
+
 		if (this.load.player.position.y > 2) {
 			this.JUMP = false;
 			this.load.player.velocity.y -= 0.005;
@@ -88,10 +91,6 @@ class App {
 			this.load.player.position.y = 0;
 			this.load.player.rotation.x = 0;
 		}
-	}
-
-	setIdleAnimation() {
-		if (!this.JUMP && this.load.jumpAction.time >= 8.2) this.load.jumpAction.time = 0;
 	}
 
 	/* Bounce the "ghost ball" to make creepy ambiance */
