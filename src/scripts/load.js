@@ -25,29 +25,31 @@ export default class Load {
 		});
 	}
 
-	loadPlayerJumping(path) {
+	loadPlayer(path) {
 		return new Promise((resolve) => {
-			const loader = new FBXLoader();
-			loader.load(path, object => {
-				this.player = object;
-				
-				this.mixer = new THREE.AnimationMixer(object);
-				this.jumpAction = this.mixer.clipAction(object.animations[0]);
+			const loader = new GLTFLoader();
+			loader.load(path, gltf => {
+				this.player = gltf.scene;
 
-				object.rotation.y = Math.PI;
-				object.position.z = 8;
+				this.mixer = new THREE.AnimationMixer(this.player);
+				this.jumpAction = this.mixer.clipAction(gltf.animations[0]);
 
-				object.traverse((child) => {
-					if (child.isMesh) {
-						child.castShadow = true;
-						child.receiveShadow = false;
+				this.jumpAction.play();
+
+				this.player.rotation.y = Math.PI;
+				this.player.position.z = 8;
+
+				this.player.traverse((object) => {
+					if (object.isMesh) {
+						object.castShadow = true;
+						object.receiveShadow = false;
 					}
 				});
 
-				object.add(this.scene.camera);
-				console.log("Character model : ", this.player);
-				this.scene.add(object);
-				resolve(object);
+				console.log("Player : ", this.player);
+				this.player.add(this.scene.camera);
+				this.scene.add(this.player);
+				resolve(this.player);
 			});
 		});
 	}

@@ -10,7 +10,7 @@ export default class Lights {
 	}
 
 	setAmbient() {
-		const hemlight = new THREE.HemisphereLight(0x404040, 0x404040, 0.5); 
+		const hemlight = new THREE.HemisphereLight(0x404040, 0x404040, 0.6); 
 		this.scene.add(hemlight);
 	}
 

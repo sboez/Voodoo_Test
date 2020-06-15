@@ -12,7 +12,6 @@ class App {
 		this.character = null;
 
 		this.JUMP = false;
-		this.END = false;
 		this.delta = 0;
 		this.time = 0;
 		this.dt = this.time;
@@ -26,7 +25,7 @@ class App {
 		this.load = new Load(this.scene);
 
 		await this.load.loadPlayground('assets/models/playground.glb');
-		await this.load.loadPlayerJumping('assets/models/player_jumping.fbx');
+		await this.load.loadPlayer('assets/models/player.glb');
 
 		this.init();
 		this.animate();
@@ -41,7 +40,7 @@ class App {
 		document.body.appendChild(this.scene.renderer.domElement);
 
 		window.addEventListener('resize', this.onWindowResize.bind(this), false);
-		window.addEventListener('click', this.character.setAnimation.bind(this));
+		window.addEventListener('click', this.character.setJumpAnimation.bind(this));
 
 		/* Get position between player and hoop */
 		this.distance = Math.sqrt(Math.pow((this.load.player.position.z - this.getObjectByName("HoopCloth").position.z), 2));
@@ -59,19 +58,19 @@ class App {
 	}
 
 	setJump() {
+		this.setIdleAnimation();
 		/* To synchronize click event with player forward rotation */
 		if (!this.JUMP) this.dt = 0;
 		else this.dt += this.delta;
 
 		/* Simulate a jump when knees are bent, pause animation when raised arms and forward rotation */
-		if(this.JUMP && this.load.jumpAction.time > 1.05) {
-			if (this.load.jumpAction.time > 1.5) this.load.jumpAction.paused = true;
-			if (this.END && this.load.player.position.y === 0) ;
+		if(this.JUMP && this.load.jumpAction.time > 9.4) {
+			if (this.load.jumpAction.time > 9.7) this.load.jumpAction.paused = true;
 			this.load.player.velocity.y += 0.002;
 			this.load.player.rotation.x = this.dt * -0.2;
 			this.load.player.position.z -= this.distance / 100;
 		}
-		if (this.load.player.position.y > 2) {;
+		if (this.load.player.position.y > 2) {
 			this.JUMP = false;
 			this.load.player.velocity.y -= 0.005;
 			this.load.player.position.z -= this.distance / 100;
@@ -79,19 +78,20 @@ class App {
 
 		/* Bouncing ball after dunk, finish player animation */
 		if (!this.JUMP && this.load.player.position.z <= 1.3) {
-			this.END = true;
 			this.scene.attach(this.character.ball);
-
 			this.character.ball.rotation.x = this.time * 4;
 			this.character.ball.position.y = 0.1 + Math.abs(Math.sin(this.time * 3)) * 2;
 			this.character.ball.position.z = 0;
 
 			this.load.jumpAction.paused = false;
-
 			this.load.player.position.z = 1.3;
 			this.load.player.position.y = 0;
 			this.load.player.rotation.x = 0;
 		}
+	}
+
+	setIdleAnimation() {
+		if (!this.JUMP && this.load.jumpAction.time >= 8.2) this.load.jumpAction.time = 0;
 	}
 
 	/* Bounce the "ghost ball" to make creepy ambiance */
@@ -113,7 +113,6 @@ class App {
 		this.time += this.delta;
 
 		if (this.load.mixer) this.load.mixer.update(this.delta);
-
 		this.load.player.position.add(this.load.player.velocity);
 
 		this.setJump();

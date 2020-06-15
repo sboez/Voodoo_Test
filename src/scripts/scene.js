@@ -10,10 +10,10 @@ export default class Scene extends THREE.Scene {
 
 	setScene() {
 		this.clock = new THREE.Clock();
-		this.background = new THREE.Color(0x5189FF);
+		this.background = new THREE.Color(0x263E70);
 
-		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
-		this.camera.position.set(-3, 4, -4);
+		this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+		this.camera.position.set(-3, 4, -6);
 		this.add(this.camera);
 
 		this.setRenderer();
