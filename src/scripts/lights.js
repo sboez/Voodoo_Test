@@ -5,11 +5,11 @@ export default class Lights {
 		this.scene = scene;
 		this.load = load;
 
-		this.setAmbient();
+		this.setHem();
 		this.setPoint();
 	}
 
-	setAmbient() {
+	setHem() {
 		const hemlight = new THREE.HemisphereLight(0x404040, 0x404040, 0.6); 
 		this.scene.add(hemlight);
 	}

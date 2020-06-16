@@ -32,9 +32,7 @@ export default class Load {
 				this.player = gltf.scene;
 
 				this.mixer = new THREE.AnimationMixer(this.player);
-				this.jumpAction = this.mixer.clipAction(gltf.animations[0]);
-
-				this.jumpAction.play();
+				this.action = this.mixer.clipAction(gltf.animations[0]);
 
 				this.player.rotation.y = Math.PI;
 				this.player.position.z = 8;
@@ -51,9 +49,5 @@ export default class Load {
 				resolve(this.player);
 			});
 		});
-	}
-
-	getObjectByName(name) {
-		return this.playground.children.find((object) => object.name === name);
 	}
 }

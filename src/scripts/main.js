@@ -43,7 +43,7 @@ class App {
 		window.addEventListener('click', this.character.setJumpAnimation.bind(this));
 
 		/* Get position between player and hoop */
-		this.distance = Math.sqrt(Math.pow((this.load.player.position.z - this.getObjectByName("HoopCloth").position.z), 2.1));
+		this.distance = Math.sqrt(Math.pow((this.load.player.position.z - this.load.playground.getObjectByName("HoopCloth").position.z), 2.1));
 	}
 
 	onWindowResize() {
@@ -52,56 +52,55 @@ class App {
 		this.scene.renderer.setSize(window.innerWidth, window.innerHeight);
 	}
 
+	/* Active flip animation */
 	setFlip() {
 		console.log("flip");
 	}
 
 	setJump() {
 		/* To synchronize click event with player forward rotation */
-		if (!this.JUMP) {
+		if (!this.JUMP && this.load.player.position.z > 7) {
 			this.character.setIdleAnimation();
 			this.dt = 0;
 		}
 		else this.dt += this.delta;
 
+		if (this.JUMP) this.load.action.play();
+
 		/* Simulate a jump when knees are bent, pause animation when raised arms and forward rotation */
-		if (this.JUMP && this.load.jumpAction.time > 9.4) {
+		if (this.load.action.time > 9.4) {
 			this.load.player.velocity.y += 0.002;
 			this.load.player.rotation.x = this.dt * -0.2;
 			this.load.player.position.z -= this.distance / 100;
+			if (this.load.action.time > 9.7) this.load.action.paused = true;
+			if (this.load.player.position.y > 2) {
+				this.JUMP = false;
+				this.load.player.velocity.y -= 0.005;
+				this.load.player.position.z -= this.distance / 100;
+			}
 		}
 
-		if (this.load.jumpAction.time > 9.7) this.load.jumpAction.paused = true;
-
-		if (this.load.player.position.y > 2) {
-			this.JUMP = false;
-			this.load.player.velocity.y -= 0.005;
-			this.load.player.position.z -= this.distance / 100;
+		/* When player is near to the basket */
+		if (this.load.player.position.z <= 1.3) {
+			if (this.load.action.time >= 11) this.load.action.stop();
+			this.setBounce();
+			this.character.setEndJump();
 		}
+	}
 
-		/* Bouncing ball after dunk, finish player animation */
-		if (!this.JUMP && this.load.player.position.z <= 1.3) {
-			this.scene.attach(this.character.ball);
-			this.character.ball.rotation.x = this.time * 4;
-			this.character.ball.position.y = 0.1 + Math.abs(Math.sin(this.time * 3)) * 2;
-			this.character.ball.position.z = 0;
-
-			this.load.jumpAction.paused = false;
-			this.load.player.position.z = 1.3;
-			this.load.player.position.y = 0;
-			this.load.player.rotation.x = 0;
-		}
+	/* Bouncing ball after dunk */
+	setBounce() {
+		this.scene.attach(this.character.ball);
+		this.character.ball.rotation.x = this.time * 4 / (1 + (this.time * 0.1));
+		this.character.ball.position.y = 0.1 + (Math.abs(Math.sin(this.time * 3)) * 2) / (1 + (this.time * 0.1));
+		this.character.ball.position.z = 0;
 	}
 
 	/* Bounce the "ghost ball" to make creepy ambiance */
 	setGhostBall() {
-		this.ghostBall = this.getObjectByName("Ghost");
+		this.ghostBall = this.load.playground.getObjectByName("Ghost");
 		this.ghostBall.rotation.x = this.time * 4;
 		this.ghostBall.position.y = 0.1 + Math.abs(Math.sin(this.time * 3)) * 2;
-	}
-
-	getObjectByName(name) {
-		return this.load.playground.children.find((object) => object.name === name);
 	}
 
 	animate() {
