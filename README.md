@@ -21,8 +21,7 @@ Make [Flip Dunk](https://apps.apple.com/fr/app/flip-dunk/id1459811607) playable 
 
 #### Method :
 
-Make the playground in Blender, it's faster and prettier. Export all 3D models in .glb files, it's smaller and made for the web. Split the code in small methods for more visibility, maintainability and to be reuse.
-
+Make the playground in Blender, it's faster and prettier. Export all 3D models in .glb files, it's smaller and made for the web.
 
 #### Feeling :
 
@@ -35,8 +34,9 @@ I love Three.JS, it's not new but re-make a playable gave me great pleasure and 
 - Best algo for jumping
 - Smaller 3D models and player model with all animations
 - Replay mode or second level
+- FX when dunk
 
-#### Fetaures ?
+#### Fetaures :
 
 Have some holidays playgrounds. Here it's a bit creepy, can be improve for Halloween playable ads.
 
