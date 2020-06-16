@@ -33,10 +33,10 @@ I love Three.JS, it's not new but re-make a playable gave me great pleasure and 
 - Add flip animation like in the game
 - Best algo for jumping
 - Smaller 3D models and player model with all animations
-- Replay mode or second level
-- FX when dunk
+- Add Replay mode or second level
+- Add FX animation when dunk
 
-#### Fetaures :
+#### Features :
 
 Have some holidays playgrounds. Here it's a bit creepy, can be improve for Halloween playable ads.
 
